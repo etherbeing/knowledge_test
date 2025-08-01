@@ -1,1 +1,11 @@
+@import "@fontsource/roboto/400.css";
+@import "@fontsource/roboto/400-italic.css";
+@import "@fontsource/roboto/700.css";
 @import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  --font-roboto: "Roboto", sans-serif;
+  --default-font-family: "Roboto", sans-serif;
+  --default-mono-font-family: "Roboto", sans-serif;
+}

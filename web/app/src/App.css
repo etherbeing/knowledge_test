@@ -1,0 +1,24 @@
+.custom-x-transition > * {
+  animation-name: animation-x-transition;
+  animation-duration: 250ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+}
+
+@keyframes animation-x-transition {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    scale: 130%;
+    transform: rotate(45deg);
+  }
+}
+
+@media (width < 1230px) {
+  .custom-xl-hidden {
+    display: none;
+  }
+}
