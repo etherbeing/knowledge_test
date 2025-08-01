@@ -15,6 +15,45 @@ services:
       - VITE_BACKEND_URL=https://engineering.cd.godjango.dev/
     networks:
       - traefik
+    engineering_backend:
+      image: ghcr.io/etherbeing/engineering_test_backend:${TAG:-latest}
+      build:
+        context: ../api/core/
+        dockerfile: ./Dockerfile
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.engineering_test_backend.rule=Host(`engineering.cd.godjango.dev`) && (PathPrefix(`/api/`) || PathPrefix(`/admin/`))
+        - traefik.http.routers.engineering_test_backend.entrypoints=web, websecure
+        - traefik.http.services.engineering_test_backend.loadbalancer.server.port=8000
+        - traefik.http.services.engineering_test_backend.loadbalancer.passHostHeader=true
+        - traefik.docker.network=traefik
+      env_file: ./.env
+      volumes:
+        - static_volume:/app/static
+        - media_volume:/app/media
+      networks:
+        - traefik
+    engineering_backend_statics:
+      image: nginx:alpine
+      volumes:
+        # Share the same volumes as backend
+        - static_volume:/usr/share/nginx/html/static
+        - media_volume:/usr/share/nginx/html/media
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.engineering_test_backend_statics.rule=Host(`engineering.cd.godjango.dev`) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))
+        - traefik.http.routers.engineering_test_backend_statics.entrypoints=web,websecure
+        - traefik.http.services.engineering_test_backend_statics.loadbalancer.server.port=80
+        - traefik.http.services.engineering_test_backend_statics.loadbalancer.passHostHeader=true
+        - traefik.docker.network=traefik
+      networks:
+        - traefik
+
+volumes:
+  static_volume:
+  media_volume:
+  # redis_data: # TODO
+  # celerybeat_schedule: # TODO
 
 networks:
   traefik:

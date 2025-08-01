@@ -33,7 +33,7 @@ import {
   CustomNode,
   KeywordHighlightPlugin,
 } from "./plugins/KeywordsHighlightingPlugin";
-import type { RefObject } from "react";
+import { type RefObject } from "react";
 import { EnterKeyHandlerPlugin } from "./plugins/KeyhandlerPlugin";
 
 const removeStylesExportDOM = (
@@ -148,6 +148,8 @@ const editorConfig = {
 export function Editor(props: {
   placeholder?: string;
   inputRef: RefObject<HTMLDivElement | null>;
+  linkSetValue: React.Dispatch<React.SetStateAction<string>>;
+  linkedValue: string;
   onSubmit: (e: KeyboardEvent) => void;
 }) {
   return (

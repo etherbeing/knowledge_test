@@ -1,6 +1,6 @@
 export default function TodoHeader() {
   return (
-    <header className="px-3 py-3 flex sticky top-0 justify-between  shadow-lg items-center">
+    <header className="px-3 py-3 flex sticky top-0 justify-between shadow-lg items-center bg-gray-900 z-50">
       <h1 className="text-lg">Todo Test Project</h1>
       <div className="flex gap-3 items-center">
         <label className="toggle text-base-content">

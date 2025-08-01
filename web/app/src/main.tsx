@@ -7,6 +7,7 @@ import { persistor, store } from "./store/index.ts";
 import { Provider } from "react-redux";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router";
+import { SnackbarProvider } from "notistack";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -14,7 +15,9 @@ createRoot(document.getElementById("root")!).render(
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <HelmetProvider>
-            <App />
+            <SnackbarProvider maxSnack={5} preventDuplicate>
+              <App />
+            </SnackbarProvider>
           </HelmetProvider>
         </PersistGate>
       </Provider>

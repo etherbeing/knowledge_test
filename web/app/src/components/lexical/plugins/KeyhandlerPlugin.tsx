@@ -1,5 +1,5 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { COMMAND_PRIORITY_HIGH, KEY_ENTER_COMMAND } from "lexical";
+import { $getRoot, COMMAND_PRIORITY_HIGH, KEY_ENTER_COMMAND } from "lexical";
 import { useEffect, type JSX } from "react";
 
 export function EnterKeyHandlerPlugin(props: {
@@ -15,6 +15,10 @@ export function EnterKeyHandlerPlugin(props: {
           event?.preventDefault();
           console.log("submit triggered");
           props.onSubmit(event);
+          editor.update(() => {
+            const root = $getRoot();
+            root.clear();
+          });
           return true; // this stop Lexical default behavior
         } else {
           return false;
