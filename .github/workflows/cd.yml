@@ -1,0 +1,29 @@
+name: Docker Compose CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker-compose:
+    name: Run Docker Compose
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.CR_USER }}
+          password: ${{ secrets.CR_PAT }}
+
+      - name: Build and run containers
+        run: |
+          docker compose --file deployment/docker-compose.yml build
+          docker compose --file deployment/docker-compose.yml push

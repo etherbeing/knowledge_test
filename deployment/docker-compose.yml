@@ -1,0 +1,29 @@
+services:
+  engineering_test:
+    image: ghcr.io/etherbeing/engineering_test:${TAG:-latest}
+    build:
+      context: ../
+      dockerfile: ./web/app/Dockerfile
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.engineering_test.rule=Host(`engineering.cd.godjango.dev`)
+        - traefik.http.routers.engineering_test.entrypoints=websecure
+        - traefik.http.routers.engineering_test.priority=1
+        - traefik.http.routers.engineering_test.tls.certresolver=letsencryptresolver
+        - traefik.http.services.engineering_test.loadbalancer.server.port=4173
+        - traefik.http.services.engineering_test.loadbalancer.passHostHeader=true
+    environment:
+      - VITE_BACKEND_URL=https://engineering.cd.godjango.dev/
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    external: true
+    name: traefik
