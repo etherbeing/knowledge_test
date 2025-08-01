@@ -2,8 +2,8 @@ services:
   engineering_test:
     image: ghcr.io/etherbeing/engineering_test:${TAG:-latest}
     build:
-      context: ../
-      dockerfile: ./web/app/Dockerfile
+      context: ../web/app/
+      dockerfile: ./Dockerfile
     deploy:
       mode: replicated
       replicas: 1
