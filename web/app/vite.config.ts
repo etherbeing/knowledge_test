@@ -14,5 +14,6 @@ export default defineConfig({
   preview: {
     allowedHosts: ["engineering.cd.godjango.dev"],
     host: true,
+    port: 4173,
   },
 });
