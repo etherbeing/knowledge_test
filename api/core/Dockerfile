@@ -7,16 +7,24 @@ RUN curl -sSf https://astral.sh/uv/install.sh | sh
 # Install a WSGI server to serve our files
 RUN uv pip install gunicorn
 
+COPY ./src/ /app/
+
+
 COPY ./entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh
 
-COPY ./ /app/
-
 WORKDIR /app/
 
-# Install your requirements from a requirements.txt file (support for poetry, pipenv should also be included at some point)
-RUN pip install -r ${REQUIREMENTS_BASE_FOLDER}/requirements.txt
+COPY ./requirements.txt /app/requirements.txt
 
+# Install your requirements from a requirements.txt file (support for poetry, pipenv should also be included at some point)
+RUN uv pip install -r /app/requirements.txt
+
+RUN rm /app/requirements.txt
+
+RUN uv python ./manage.py collectstatic --noinput
+
+RUN uv python ./manage.py migrate
 
 ENTRYPOINT ["/entrypoint.sh"]
