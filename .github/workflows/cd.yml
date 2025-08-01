@@ -27,4 +27,4 @@ jobs:
         run: |
           docker compose --file deployment/docker-compose.yml build
           docker compose --file deployment/docker-compose.yml push
-          docker compose --file deployment/docker-compose.yml up -d
+          docker compose --file deployment/docker-compose.yml --project-name engineering up -d

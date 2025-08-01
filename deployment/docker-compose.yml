@@ -4,19 +4,13 @@ services:
     build:
       context: ../web/app/
       dockerfile: ./Dockerfile
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement:
-        constraints:
-          - node.role == manager
-      labels:
-        - traefik.enable=true
-        - traefik.http.routers.engineering_test.rule=Host(`engineering.cd.godjango.dev`)
-        - traefik.http.routers.engineering_test.entrypoints=web, websecure
-        - traefik.http.services.engineering_test.loadbalancer.server.port=4173
-        - traefik.http.services.engineering_test.loadbalancer.passHostHeader=true
-        - traefik.docker.network=traefik
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.engineering_test.rule=Host(`engineering.cd.godjango.dev`)
+      - traefik.http.routers.engineering_test.entrypoints=web, websecure
+      - traefik.http.services.engineering_test.loadbalancer.server.port=4173
+      - traefik.http.services.engineering_test.loadbalancer.passHostHeader=true
+      - traefik.docker.network=traefik
     environment:
       - VITE_BACKEND_URL=https://engineering.cd.godjango.dev/
     networks:
