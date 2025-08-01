@@ -17,6 +17,7 @@
     "@tailwindcss/vite": "^4.1.11",
     "feather-icons": "^4.29.2",
     "formik": "^2.4.6",
+    "gh-pages": "^6.3.0",
     "lexical": "^0.33.1",
     "notistack": "^3.0.2",
     "react": "^19.1.0",
