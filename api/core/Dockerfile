@@ -22,6 +22,6 @@ WORKDIR /app/
 COPY ./requirements.txt /app/requirements.txt
 
 # Install your requirements from a requirements.txt file (support for poetry, pipenv should also be included at some point)
-RUN uv pip install --system -r /app/requirements.txt && rm /app/requirements.txt && uv run python ./manage.py collectstatic --noinput && uv run python ./manage.py migrate
+RUN uv pip install --system -r /app/requirements.txt && rm /app/requirements.txt && uv run python ./manage.py collectstatic --noinput && mkdir -p /app/database
 
 ENTRYPOINT ["/entrypoint.sh"]
