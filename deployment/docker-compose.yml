@@ -11,8 +11,7 @@ services:
       - traefik.http.services.engineering_test.loadbalancer.server.port=4173
       - traefik.http.services.engineering_test.loadbalancer.passHostHeader=true
       - traefik.docker.network=traefik
-    environment:
-      - VITE_BACKEND_URL=https://engineering.cd.godjango.dev/
+    env_file: ./.env
     networks:
       - traefik
   engineering_backend:
