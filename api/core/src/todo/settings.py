@@ -64,10 +64,7 @@ CORS_ALLOW_CREDENTIALS = True
 SESSION_COOKIE_SAMESITE = "None"
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SAMESITE = "None"
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
-    "http://localhost:8000",
-]
+CSRF_TRUSTED_ORIGINS = literal_eval(os.getenv("CSRF_TRUSTED_ORIGINS", "[]"))
 CSRF_COOKIE_SECURE = False
 
 
