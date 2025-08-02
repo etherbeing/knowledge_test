@@ -1,8 +1,12 @@
 FROM python:3-alpine
 
-RUN apk add --no-cache gettext-dev curl
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-RUN curl -sSf https://astral.sh/uv/install.sh | sh
+RUN apk add --no-cache gettext-dev
+
+# RUN curl -sSf https://astral.sh/uv/install.sh | sh
+
+# ENV PATH=$PATH:$HOME/.cargo/bin
 
 # Install a WSGI server to serve our files
 RUN uv pip install gunicorn
