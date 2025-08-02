@@ -9,10 +9,9 @@ RUN apk add --no-cache gettext-dev
 # ENV PATH=$PATH:$HOME/.cargo/bin
 
 # Install a WSGI server to serve our files
-RUN uv pip install gunicorn
+RUN uv pip install --system gunicorn
 
 COPY ./src/ /app/
-
 
 COPY ./entrypoint.sh /entrypoint.sh
 
@@ -23,6 +22,6 @@ WORKDIR /app/
 COPY ./requirements.txt /app/requirements.txt
 
 # Install your requirements from a requirements.txt file (support for poetry, pipenv should also be included at some point)
-RUN uv pip install -r /app/requirements.txt && rm /app/requirements.txt && uv python ./manage.py collectstatic --noinput && uv python ./manage.py migrate
+RUN uv pip install --system -r /app/requirements.txt && rm /app/requirements.txt && uv python ./manage.py collectstatic --noinput && uv python ./manage.py migrate
 
 ENTRYPOINT ["/entrypoint.sh"]
